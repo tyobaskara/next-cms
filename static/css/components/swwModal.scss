@@ -1,0 +1,32 @@
+.swwModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  &__box {
+    position: absolute;
+    margin: 0;
+    top: 100px;
+    left: 50%;
+    width: 400px;
+    height: 250px;
+    background: #dc3545;
+    border-radius: 3px;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+    p {
+      font-size: 21px;
+      margin-bottom: 20px;
+    }
+  }
+}

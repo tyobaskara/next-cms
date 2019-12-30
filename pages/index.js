@@ -1,47 +1,75 @@
-import React,{ Component} from 'react';
+import React, { Component } from 'react';
+import isEmpty from 'lodash/isEmpty';
 import axios from 'axios';
 import MainLayout from '../components/layouts/mainLayout';
-import css from '../styles/main.scss';
+
+import '../static/css/styles.scss';
 
 class Home extends Component {
-    static async getInitialProps({pathname,query,asPath,req,res}){
-        let userData;
+  static async getInitialProps({ pathname, query, asPath, req, res }) {
+    let userData,
+      error = {};
 
-        try {
-            const response = await axios.get('https://jsonplaceholder.typicode.com/users/1')
-            userData = response.data;
-        } catch(e) {
-            console.log('error', e);
-        }
-
-        return {
-            user:{
-                name:'Francis',
-                lastname:'Jones'
-            },
-            userData
-        }
+    try {
+      const response = await axios.get(
+        'https://jsonplaceholder.typicode.com/users/1'
+      );
+      userData = response.data;
+    } catch (e) {
+      error = e;
     }
 
-    constructor(props){
-        super(props)
+    return {
+      user: {
+        name: 'Francis',
+        lastname: 'Jones'
+      },
+      userData,
+      error
+    };
+  }
 
-        this.state = {
-            user: this.props.user,
-            userData: this.props.userData
-        }
-    }
+  constructor(props) {
+    super(props);
 
-    render(){
-       // console.log(this.state);
-        return(
-            <>
-                <MainLayout>
-                    <h1 className={css.headingOne}>Welcome to my page, guys</h1>
-                </MainLayout>
-            </>
-        )
-    }
+    this.state = {
+      error: this.props.error
+    };
+  }
+
+  _closeModal = () => {
+    this.setState({
+      error: {}
+    });
+  };
+
+  _renderErrorModal = () => {
+    const { error } = this.state;
+
+    return (
+      !isEmpty(error) && (
+        <div className='swwModal'>
+          <div className='swwModal__box'>
+            <p>Something went wrong!</p>
+            <button className='btn btn-secondary' onClick={this._closeModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      )
+    );
+  };
+
+  render() {
+    return (
+      <>
+        <MainLayout>
+          <h1 className='headingOne'>Welcome {this.props.user.name}</h1>
+          {this._renderErrorModal()}
+        </MainLayout>
+      </>
+    );
+  }
 }
 
 export default Home;
