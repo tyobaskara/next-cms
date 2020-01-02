@@ -20,8 +20,7 @@ class Home extends Component {
 
     return {
       user: {
-        name: 'Francis',
-        lastname: 'Jones'
+        name: 'Tyo Baskara'
       },
       userData,
       error
