@@ -3,15 +3,15 @@ import Link from 'next/link'
 import isEmpty from 'lodash/isEmpty';
 import axios from 'axios';
 import MainLayout from '../components/layouts/mainLayout';
+import PropTypes from 'prop-types';
 
 class Home extends Component {
   static async getInitialProps({ pathname, query, asPath, req, res }) {
-    let userData,
-      error = {};
+    let userData, error;
 
     try {
       const response = await axios.get(
-        'https://jsonplaceholder.typicode.com/users'
+        'https://jsonplaceholder.typicode.com/userss'
       );
       userData = response.data;
     } catch (e) {
@@ -90,6 +90,15 @@ class Home extends Component {
       </>
     );
   }
+}
+
+Home.propTypes = {
+  userData: PropTypes.array,
+  error: PropTypes.object
+}
+Home.defaultProps = {
+  userData: [],
+  error: {}
 }
 
 export default Home;
