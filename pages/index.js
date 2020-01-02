@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Link from 'next/link'
 import isEmpty from 'lodash/isEmpty';
 import axios from 'axios';
 import MainLayout from '../components/layouts/mainLayout';
@@ -10,7 +11,7 @@ class Home extends Component {
 
     try {
       const response = await axios.get(
-        'https://jsonplaceholder.typicode.com/users/1'
+        'https://jsonplaceholder.typicode.com/users'
       );
       userData = response.data;
     } catch (e) {
@@ -41,6 +42,23 @@ class Home extends Component {
     });
   };
 
+  renderUserList = users =>
+    users.map((user, i) => (
+      <li className='list-group-item' key={i}>
+        <Link
+          as={`/users/profile/${user.id}`}
+          href={{
+            pathname: '/users/profile',
+            query: {
+              userId: user.id
+            }
+          }}
+        >
+          <a>{user.name}</a>
+        </Link>
+      </li>
+    ));
+
   _renderErrorModal = () => {
     const { error } = this.state;
 
@@ -63,6 +81,11 @@ class Home extends Component {
       <>
         <MainLayout>
           <h1 className='headingOne'>Welcome {this.props.user.name}</h1>
+
+          <h2>Pick a user</h2>
+          <ul className='list-group'>
+            {this.renderUserList(this.props.userData)}
+          </ul>
           {this._renderErrorModal()}
         </MainLayout>
       </>
