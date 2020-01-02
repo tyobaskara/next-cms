@@ -11,7 +11,7 @@ class Home extends Component {
 
     try {
       const response = await axios.get(
-        'https://jsonplaceholder.typicode.com/userss'
+        'https://jsonplaceholder.typicode.com/users'
       );
       userData = response.data;
     } catch (e) {
@@ -41,7 +41,16 @@ class Home extends Component {
     });
   };
 
-  renderUserList = users =>
+  _renderUserListSection = () => !isEmpty(this.props.userData) && (
+    <>
+      <h2>Pick a user</h2>
+      <ul className='list-group'>
+        {this._renderUserList(this.props.userData)}
+      </ul>
+    </>
+  )
+
+  _renderUserList = users =>
     users.map((user, i) => (
       <li className='list-group-item' key={i}>
         <Link
@@ -80,11 +89,7 @@ class Home extends Component {
       <>
         <MainLayout>
           <h1 className='headingOne'>Welcome {this.props.user.name}</h1>
-
-          <h2>Pick a user</h2>
-          <ul className='list-group'>
-            {this.renderUserList(this.props.userData)}
-          </ul>
+          {this._renderUserListSection()}
           {this._renderErrorModal()}
         </MainLayout>
       </>
