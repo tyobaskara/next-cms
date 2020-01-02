@@ -1,21 +1,42 @@
-import React,{ Component} from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 
-const Profile =(props)=> {
-    
-        console.log(props)
+class Profile extends Component {
+  static async getInitialProps(props) {
+    const { query } = props;
+    let user;
+    console.log('~props', props);
 
-        return(
-            <>
-                <h1>Profile</h1>
-            </>
-        )
-    
+    try {
+      const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/users/${query.userId}`
+      );
+      user = response.data;
+    } catch (error) {
+      console.error(error);
+    }
+
+    return { user };
+  }
+
+  showUser = user => (
+    <div>
+      <div>Name: {user.name}</div>
+      <div>Lastname: {user.phone}</div>
+      <div>Email: {user.email}</div>
+    </div>
+  );
+
+  render() {
+    console.log('Hoi', this.props);
+    return (
+      <>
+        <br />
+        <h1>User Profile</h1>
+        {this.showUser(this.props.user)}
+      </>
+    );
+  }
 }
-
-Profile.getInitialProps = async ({req}) => {
-    return { values: '1,2,3,4'}
-}
-
-
 
 export default Profile;
