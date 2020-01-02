@@ -3,8 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import axios from 'axios';
 import MainLayout from '../components/layouts/mainLayout';
 
-import '../static/css/styles.scss';
-
 class Home extends Component {
   static async getInitialProps({ pathname, query, asPath, req, res }) {
     let userData,

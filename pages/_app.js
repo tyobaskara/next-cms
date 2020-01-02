@@ -1,6 +1,8 @@
 import React from 'react';
 import App from 'next/app';
 
+import '../static/css/styles.scss';
+
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
