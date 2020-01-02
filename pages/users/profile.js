@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class Profile extends Component {
-  static async getInitialProps(props) {
-    const { query } = props;
+  static async getInitialProps({ query }) {
     let user;
-    console.log('~props', props);
 
     try {
       const response = await axios.get(
@@ -28,7 +26,6 @@ class Profile extends Component {
   );
 
   render() {
-    console.log('Hoi', this.props);
     return (
       <>
         <br />
