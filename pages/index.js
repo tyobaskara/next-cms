@@ -86,13 +86,11 @@ class Home extends Component {
 
   render() {
     return (
-      <>
-        <MainLayout>
-          <h1 className='headingOne'>Welcome {this.props.user.name}</h1>
-          {this._renderUserListSection()}
-          {this._renderErrorModal()}
-        </MainLayout>
-      </>
+      <MainLayout>
+        <h1 className='headingOne'>Welcome {this.props.user.name}</h1>
+        {this._renderUserListSection()}
+        {this._renderErrorModal()}
+      </MainLayout>
     );
   }
 }

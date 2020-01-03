@@ -5,6 +5,18 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const mongoose = require('mongoose');
+mongoose
+  .connect(
+    process.env.MONGO_SERV,
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    console.log('mongo client connected');
+    console.log(process.env.MONGO_SERV);
+  })
+  .catch(err => console.log(err));
+
 app
   .prepare()
   .then(() => {
