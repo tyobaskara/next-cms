@@ -1,11 +1,14 @@
 const express = require('express');
 const next = require('next');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const mongoose = require('mongoose');
+const User = require('./models/users');
+
 mongoose
   .connect(
     process.env.MONGO_SERV,
@@ -21,6 +24,17 @@ app
   .prepare()
   .then(() => {
     const server = express();
+    server.use(bodyParser.json());
+
+    server.post('/api/v1/users', (req, res) => {
+      const userData = req.body;
+      const user = new User(userData);
+
+      user.save((err, user) => {
+        if (err) return res.status(422).send(err);
+        return res.json(user);
+      })
+    });
 
     server.get('/users/profile/:id', (req, res) => {
       const actualPage = '/users/profile';
