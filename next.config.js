@@ -1,5 +1,5 @@
 const withSass = require('@zeit/next-sass');
-const cssConfig = { cssModules: true };
+const cssConfig = { cssModules: false };
 const { parsed: localEnv } = require('dotenv').config();
 const webpack = require('webpack');
 const withPlugins = require('next-compose-plugins');
